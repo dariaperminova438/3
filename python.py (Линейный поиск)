@@ -1,0 +1,22 @@
+def linear_search(arr, target):
+    """
+    Функция линейного поиска
+    """
+    # Проходим по всем элементам массива
+    for i in range(len(arr)):
+        # Если нашли искомый элемент - возвращаем индекс
+        if arr[i] == target:
+            return i
+    # Если элемент не найден - возвращаем -1
+    return -1
+
+# Пример использования
+numbers = [3, 5, 2, 7, 9, 1, 4]
+target = 7
+
+result = linear_search(numbers, target)
+
+if result != -1:
+    print(f"Элемент найден на позиции {result}")
+else:
+    print("Элемент не найден")
