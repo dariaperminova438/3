@@ -1,0 +1,95 @@
+import java.util.Arrays;
+
+public class MergeSort {
+    
+    // Главный метод сортировки слиянием
+    public static void mergeSort(int[] arr) {
+        // Базовый случай: если массив пустой или содержит один элемент - уже отсортирован
+        if (arr.length <= 1) {
+            return;
+        }
+        
+        // Находим середину массива
+        int mid = arr.length / 2;
+        
+        // Создаем два подмассива - левую и правую часть
+        int[] left = new int[mid];
+        int[] right = new int[arr.length - mid];
+        
+        // Копируем элементы в левый подмассив
+        for (int i = 0; i < mid; i++) {
+            left[i] = arr[i];
+        }
+        
+        // Копируем элементы в правый подмассив
+        for (int i = mid; i < arr.length; i++) {
+            right[i - mid] = arr[i];
+        }
+        
+        // Рекурсивно сортируем обе половины
+        mergeSort(left);
+        mergeSort(right);
+        
+        // Сливаем отсортированные половины обратно в исходный массив
+        merge(arr, left, right);
+    }
+    
+    // Метод для слияния двух отсортированных массивов
+    private static void merge(int[] arr, int[] left, int[] right) {
+        // Индексы для перемещения по трем массивам
+        int i = 0; // индекс для левого массива
+        int j = 0; // индекс для правого массива
+        int k = 0; // индекс для результирующего массива
+        
+        // Пока есть элементы в обоих массивах
+        while (i < left.length && j < right.length) {
+            // Сравниваем элементы из левого и правого массива
+            if (left[i] <= right[j]) {
+                // Если элемент из левого массива меньше или равен - берем его
+                arr[k] = left[i];
+                i++; // переходим к следующему элементу в левом массиве
+            } else {
+                // Если элемент из правого массива меньше - берем его
+                arr[k] = right[j];
+                j++; // переходим к следующему элементу в правом массиве
+            }
+            k++; // переходим к следующей позиции в результирующем массиве
+        }
+        
+        // Копируем оставшиеся элементы из левого массива (если есть)
+        while (i < left.length) {
+            arr[k] = left[i];
+            i++;
+            k++;
+        }
+        
+        // Копируем оставшиеся элементы из правого массива (если есть)
+        while (j < right.length) {
+            arr[k] = right[j];
+            j++;
+            k++;
+        }
+    }
+    
+    // Вспомогательный метод для вывода массива
+    public static void printArray(int[] arr) {
+        for (int value : arr) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+    }
+    
+    // Основной метод для тестирования
+    public static void main(String[] args) {
+        int[] array = {38, 27, 43, 3, 9, 82, 10};
+        
+        System.out.println("Исходный массив:");
+        printArray(array);
+        
+        // Вызываем сортировку слиянием
+        mergeSort(array);
+        
+        System.out.println("Отсортированный массив:");
+        printArray(array);
+    }
+}
