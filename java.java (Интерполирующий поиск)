@@ -1,0 +1,63 @@
+public class InterpolationSearch {
+    
+    // Рекурсивная реализация интерполирующего поиска
+    public static int interpolationSearch(int[] arr, int lo, int hi, int x) {
+        // Проверяем, что границы корректны и элемент находится в диапазоне массива
+        if (lo <= hi && x >= arr[lo] && x <= arr[hi]) {
+            
+            // Вычисляем позицию с помощью интерполяционной формулы
+            // Формула: pos = lo + ((x - arr[lo]) * (hi - lo)) / (arr[hi] - arr[lo])
+            int pos = lo + (((hi - lo) * (x - arr[lo])) / (arr[hi] - arr[lo]));
+            
+            // Если элемент найден в вычисленной позиции
+            if (arr[pos] == x) {
+                return pos;
+            }
+            
+            // Если искомый элемент больше элемента в позиции pos
+            if (arr[pos] < x) {
+                // Рекурсивно ищем в правой части массива (от pos+1 до hi)
+                return interpolationSearch(arr, pos + 1, hi, x);
+            }
+            
+            // Если искомый элемент меньше элемента в позиции pos
+            if (arr[pos] > x) {
+                // Рекурсивно ищем в левой части массива (от lo до pos-1)
+                return interpolationSearch(arr, lo, pos - 1, x);
+            }
+        }
+        
+        // Элемент не найден (базовый случай рекурсии)
+        return -1;
+    }
+    
+    // Итеративная реализация интерполирующего поиска
+    public static int interpolationSearchIterative(int[] arr, int x) {
+        // Устанавливаем начальные границы поиска
+        int lo = 0;
+        int hi = arr.length - 1;
+        
+        // Пока границы корректны и элемент находится в диапазоне массива
+        while (lo <= hi && x >= arr[lo] && x <= arr[hi]) {
+            // Вычисляем предполагаемую позицию с помощью интерполяции
+            int pos = lo + (((hi - lo) * (x - arr[lo])) / (arr[hi] - arr[lo]));
+            
+            // Если элемент найден
+            if (arr[pos] == x) {
+                return pos;
+            }
+            
+            // Если искомый элемент больше, сужаем поиск к правой части
+            if (arr[pos] < x) {
+                lo = pos + 1;
+            } 
+            // Если искомый элемент меньше, сужаем поиск к левой части
+            else {
+                hi = pos - 1;
+            }
+        }
+        
+        // Элемент не найден
+        return -1;
+    }
+}
